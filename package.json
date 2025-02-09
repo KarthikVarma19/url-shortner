@@ -1,0 +1,31 @@
+{
+  "name": "short-url",
+  "version": "1.0.0",
+  "description": "A backend API service for shortening URLs, generating short links, and handling redirects.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KarthikVarma19/url-shortener"
+  },
+  "keywords": [
+    "url-shortener",
+    "short-url",
+    "backend",
+    "nodejs",
+    "express",
+    "API"
+  ],
+  "author": "Karthik Varma Ganaraju",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.10.0",
+    "nanoid": "^5.0.9",
+    "nodemon": "^3.1.9",
+    "valid-url": "^1.0.9"
+  }
+}
