@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      header {
+        background-color: #333;
+        color: white;
+        padding: 1rem 0;
+        text-align: center;
+      }
+      .error {
+        color: black;
+        text-align: center;
+        font-size: larger;
+        background-color: red;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .container {
+        flex: 1;
+        width: 80%;
+        margin: 0 auto;
+        padding: 2rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .form-container {
+        background: white;
+        padding: 2rem;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 600px;
+        margin-bottom: 2rem;
+      }
+      .form-container h2 {
+        margin-bottom: 1rem;
+      }
+      .form-container input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+      .form-container button {
+        padding: 10px 20px;
+        background-color: #333;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .services {
+        width: 100%;
+      }
+      .services h2 {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+      .services .service {
+        background: white;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      @media (min-width: 768px) {
+        .services {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+        }
+        .services .service {
+          margin-bottom: 0;
+        }
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+  </head>
+  <body>
+    <header>
+      <h1>URL Shortener</h1>
+    </header>
+
+    <div class="container">
+      <div class="form-container">
+        <% if (locals.id) { %>
+        <p>
+          URL Generated:
+          <a href="http://localhost:8001/<%=id %>" target="_blank"
+            >http://localhost:8001/<%=id %></a
+          >
+        </p>
+        <% } else if (locals.error) { %>
+            <p class="error">
+              <%= error %>
+            </p>
+          <% } %>
+        <h2>Convert Long URL to Short URL</h2>
+        <form action="/url" method="POST">
+          <input
+            type="text"
+            name="original_url"
+            placeholder="Enter your long URL here"
+            required
+          />
+          <button type="submit">Shorten URL</button>
+        </form>
+      </div>
+      <h2>Our Services</h2>
+      <div class="services">
+        
+        <div class="service">
+          <h3>Fast URL Shortening</h3>
+          <p>
+            Quickly shorten your long URLs with our fast and reliable service.
+          </p>
+        </div>
+        <div class="service">
+          <h3>Analytics</h3>
+          <p>
+            Track the performance of your short URLs with detailed analytics.
+          </p>
+        </div>
+        <div class="service">
+          <h3>Custom URLs</h3>
+          <p>Create custom short URLs to match your branding.</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
