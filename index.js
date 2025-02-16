@@ -1,8 +1,11 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const urlRoute = require("./routes/url");
 const shortUrlRoute = require("./routes/shortUrl");
 const analyticsRoute = require("./routes/analyticsRoute");
 const staticRoute = require("./routes/staticRouter");
+const userRoute = require("./routes/user");
+const {restrictToLoggedInUserOnly} = require("./middlewares/auth");
 const { connectToMongoDb } = require("./connect");
 const dotenv = require("dotenv");
 const URL = require("./models/url");
@@ -22,14 +25,19 @@ connectToMongoDb(URI).then(() => {
 app.set("view engine", "ejs");
 app.set("views", path.resolve('./views'));
 app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use(express.json());
 
 //Home Page
+app.use("/user", userRoute);
 app.use("/", staticRoute);
-
-app.use(express.json());
-app.use("/url", urlRoute);
+app.use("/url", restrictToLoggedInUserOnly, urlRoute);
 app.use("/", shortUrlRoute);
 app.use("/analytics", analyticsRoute);
+
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server Started Running at ${PORT}`);
