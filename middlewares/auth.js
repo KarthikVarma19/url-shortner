@@ -8,13 +8,19 @@ async function restrictToLoggedInUserOnly(req, res, next){
     }
 
     const user = getUser(useruid);
-    if(!useruid){
+    if(!user){
         return res.redirect("/login");
     }
-
     req.user = user;
     next();
 }
 
 
-module.exports = {restrictToLoggedInUserOnly};
+async function checkAuth(req, res, next){
+    const useruid = req.cookies.uid;
+    const user = getUser(useruid);
+    req.user = user;
+    next();
+}
+
+module.exports = {restrictToLoggedInUserOnly, checkAuth};

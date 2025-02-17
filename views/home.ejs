@@ -117,7 +117,7 @@
             </p>
           <% } %>
         <h2>Convert Long URL to Short URL</h2>
-        <form action="/url" method="POST">
+        <form action="/url" method="POST" id="createForm">
           <input
             type="text"
             name="original_url"
@@ -126,6 +126,33 @@
           />
           <button type="submit">Shorten URL</button>
         </form>
+      </div>
+      <!--Showing the Url That Are Created By Him-->
+      <div>
+        <% if (typeof urls !== 'undefined' && urls.length > 0) { %>
+        <table border="1">
+          <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Original URL</th>
+          <th>Short URL</th>
+          <th>Clicks</th>
+        </tr>
+          </thead>
+          <tbody>
+        <% urls.forEach(function(url, index) { %>
+        <tr>
+          <td><%=index+1%></td>
+          <td><%= url.redirectURL %></td>
+          <td><a href="http://localhost:8001/<%= url.shortId %>" target="_blank">http://localhost:8001/<%= url.shortId %></a></td>
+          <td><%= url.visitHistory.length %></td>
+        </tr>
+        <% }); %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <p>No URLs found.</p>
+        <% } %>
       </div>
       <h2>Our Services</h2>
       <div class="services">
@@ -148,5 +175,7 @@
         </div>
       </div>
     </div>
+
+
   </body>
 </html>

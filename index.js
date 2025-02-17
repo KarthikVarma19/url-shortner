@@ -5,7 +5,7 @@ const shortUrlRoute = require("./routes/shortUrl");
 const analyticsRoute = require("./routes/analyticsRoute");
 const staticRoute = require("./routes/staticRouter");
 const userRoute = require("./routes/user");
-const {restrictToLoggedInUserOnly} = require("./middlewares/auth");
+const {restrictToLoggedInUserOnly, checkAuth} = require("./middlewares/auth");
 const { connectToMongoDb } = require("./connect");
 const dotenv = require("dotenv");
 const URL = require("./models/url");
@@ -28,9 +28,10 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.json());
 
+
 //Home Page
 app.use("/user", userRoute);
-app.use("/", staticRoute);
+app.use("/", checkAuth, staticRoute);
 app.use("/url", restrictToLoggedInUserOnly, urlRoute);
 app.use("/", shortUrlRoute);
 app.use("/analytics", analyticsRoute);

@@ -36,14 +36,16 @@ async function handleGenerateNewShortURL(req, res) {
       shortId: shortId,
       redirectURL: originalURL,
       visitHistory: [],
+      createdBy: req.user._id,
     });
-
-    return res.render("home", {
-      id: shortId,
+    const allUrls = await URL.find({createdBy: req.user._id});
+    return res.status(200).render("home", {
+      id: shortId, 
+      urls: allUrls,
     });
     //return res.json({id: shortId});
   }
-  return res.render("home", { error: "url is incorrect" });
+  return res.status(303).redirect("/", { error: "url is incorrect" });
   //return res.status(404).json({error: "url is incorrect"});
 }
 
